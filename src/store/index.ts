@@ -48,7 +48,7 @@ export default createStore({
   getters: {
     breadCrumbList: (state: { breadCrumbList: MenuItem[] }) => state.breadCrumbList,
     local: state => state.local,
-    menuList: state => getMenuByRouter(routers, []),
+    menuList: _state => getMenuByRouter(routers, []),
     cfg: state => state.cfg,
     gestures: state => state.gestures
   },
@@ -73,7 +73,7 @@ export default createStore({
     },
     updateConfig (state, payload: { key: string; value: unknown }) {
       if (state.cfg && typeof state.cfg === 'object') {
-        (state.cfg as Record<string, unknown>)[payload.key] = payload.value
+        state.cfg = { ...state.cfg, [payload.key]: payload.value }
       }
     }
   },

@@ -27,7 +27,7 @@
               class="modern-table"
               height="calc(100vh - 380px)"
             >
-              <el-table-column label="Key" prop="key" width="200" fixed="left">
+              <el-table-column label="Key" prop="key" width="200">
                 <template #default="{ row }">
                   <div class="key-cell">
                     <el-tag size="small" effect="dark" type="info">{{ row.key }}</el-tag>
@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch, getCurrentInstance } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 import { Edit } from '@element-plus/icons-vue'
 

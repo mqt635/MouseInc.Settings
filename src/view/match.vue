@@ -14,7 +14,7 @@
           class="modern-table"
           v-loading="!cfg.MatchGlobal"
         >
-          <el-table-column :label="$t('valid')" width="70" align="center" fixed="left">
+          <el-table-column :label="$t('valid')" width="70" align="center">
             <template #default="{ row, $index }">
               <el-switch
                 v-model="row.Valid"
@@ -164,7 +164,7 @@ interface MatchRow {
   Valid: boolean
   Sign: string
   Name: string
-  Actions: any[]
+  Actions: string[][]
 }
 
 interface ModalState {
@@ -173,8 +173,8 @@ interface ModalState {
   index?: number
   sign: string
   name: string
-  actions: any[]
-  new_actions: any[]
+  actions: string[][]
+  new_actions: string[][]
   btn: 'primary' | 'success'
 }
 
@@ -192,12 +192,13 @@ const modal = reactive<ModalState>({
   btn: 'primary'
 })
 
-function formatActions (actions: any[] | undefined): string {
+function formatActions (actions: string[][] | undefined): string {
   if (!actions || !Array.isArray(actions)) return ''
-  return actions.map(a => {
+  return (actions as unknown as unknown[]).map(a => {
     if (typeof a === 'string') return a
-    if (a.cmd) return `cmd: ${a.cmd}`
-    if (a.key) return `key: ${a.key}`
+    const obj = a as Record<string, unknown>
+    if (obj.cmd) return `cmd: ${obj.cmd}`
+    if (obj.key) return `key: ${obj.key}`
     return JSON.stringify(a)
   }).join(' → ')
 }
